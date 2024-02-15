@@ -3,8 +3,11 @@ package org.example.repository;
 import org.example.model.Task;
 import org.example.model.TaskStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -21,4 +24,8 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
      * @return Возвращает список задач с указанным статусом.
      */
     List<Task> findByStatus(TaskStatus status);
+
+    @Modifying
+    @Query("UPDATE tasks SET status = :status WHERE id = :id")
+    void changeStatus(Long id, TaskStatus status);
 }

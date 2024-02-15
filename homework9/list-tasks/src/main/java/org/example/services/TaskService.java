@@ -57,7 +57,7 @@ public class TaskService {
         Optional<Task> optionalTask = repository.findById(id);
         if (optionalTask.isPresent()) {
             Task taskForUpdate = optionalTask.get();
-            taskForUpdate.setStatus(task.getStatus());
+            repository.changeStatus(id, task.getStatus());
             return taskForUpdate;
         } else {
             throw new IllegalArgumentException("Task not found by number: " + id);
